@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="HtmlAgilityPack" Version="1.7.3" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DotAttribute.Repo\DotAttribute.Repo.csproj" />
   </ItemGroup>
 
