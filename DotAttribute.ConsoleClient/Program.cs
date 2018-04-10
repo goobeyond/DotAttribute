@@ -3,7 +3,7 @@ using HtmlAgilityPack;
 using System.Text.RegularExpressions;
 using System.Linq;
 using DotAttribute.Repo;
-using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace DotAttribute.ConsoleClient
 {
@@ -21,7 +21,7 @@ namespace DotAttribute.ConsoleClient
             var attributesUnformatted = doc.DocumentNode.SelectSingleNode("//table/tr/td/table").InnerText;
             var matches = new Regex(@"\d*\D\d.?\d?").Matches(attributesUnformatted).Select(b => Convert.ToDouble(b.Value)).ToList();
 
-            var abaddonAtr = new AttributeModel
+            var heroAttr = new AttributeModel
             {
                 Strength = matches[0],
                 StrGain = matches[1],
@@ -30,8 +30,18 @@ namespace DotAttribute.ConsoleClient
                 Intelligence = matches[4],
                 IntGain = matches[5]
             };
+            
+            double[,] heroStrGraph = new double[25,2];
 
-            Console.WriteLine(matches.ToString()); 
+            for (int i = 0; i < 25; i++)
+            {
+                heroStrGraph[i, 0] = i + 1;
+                heroStrGraph[i, 1] = heroAttr.Strength + Math.Round((heroAttr.StrGain * (i+1)), 1);
+            }
+
+            var json = JsonConvert.SerializeObject(heroStrGraph);
+
+            Console.WriteLine(json); 
         }
 	}
 }
