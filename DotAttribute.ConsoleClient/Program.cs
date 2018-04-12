@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Linq;
 using DotAttribute.Repo;
 using Newtonsoft.Json;
+using System.Drawing;
 
 namespace DotAttribute.ConsoleClient
 {
@@ -30,18 +31,40 @@ namespace DotAttribute.ConsoleClient
                 Intelligence = matches[4],
                 IntGain = matches[5]
             };
-            
-            double[,] heroStrGraph = new double[25,2];
+
+            #region "data generation for google graph"
+            double[,] heroStrGraph = new double[25, 2];
 
             for (int i = 0; i < 25; i++)
             {
                 heroStrGraph[i, 0] = i + 1;
-                heroStrGraph[i, 1] = heroAttr.Strength + Math.Round((heroAttr.StrGain * (i+1)), 1);
+                heroStrGraph[i, 1] = heroAttr.Strength + Math.Round((heroAttr.StrGain * (i + 1)), 1);
             }
 
             var json = JsonConvert.SerializeObject(heroStrGraph);
 
-            Console.WriteLine(json); 
+            //Console.WriteLine(json);
+            #endregion
+
+            #region "data generation for chart js"
+
+            var CJSData = new ChartJsData();
+            for (int i = 0; i < 25; i++)
+            {
+                CJSData.data[i] = (Math.Round(heroAttr.Strength + (heroAttr.StrGain * (i + 1)), 1));
+            }
+
+            CJSData.label = "Abaddon strength";
+            //TODO: investigate System.Drawing.ColorConvertor
+            CJSData.borderColor = "#3e95cd";
+            CJSData.fill = false;
+
+            var json2 = JsonConvert.SerializeObject(CJSData);
+
+            Console.WriteLine(json2);
+
+            #endregion
+
         }
-	}
+    }
 }
