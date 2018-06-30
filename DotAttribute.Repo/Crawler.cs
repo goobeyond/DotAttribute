@@ -13,7 +13,7 @@ namespace DotAttribute.Repo
         public static List<string> GetAllHeroHomepages()
         {
             var list = new List<string>();
-            var data = NameRetriever.GetAllHeroes();
+            var data = new NameRetriever().GetAllHeroes();
             foreach(string hero in data){
                 System.IO.File.AppendAllText($"../../../../hero web pages/{hero}.html", GetHeroHomepage(hero));
             }
