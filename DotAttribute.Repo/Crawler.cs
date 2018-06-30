@@ -15,7 +15,7 @@ namespace DotAttribute.Repo
             var list = new List<string>();
             var data = new NameRetriever().GetAllHeroes();
             foreach(string hero in data){
-                System.IO.File.AppendAllText($"../../../../hero web pages/{hero}.html", GetHeroHomepage(hero));
+                System.IO.File.AppendAllText($"../../../../hero web pages{hero}.html", GetHeroHomepage(hero));
             }
             
 
@@ -23,7 +23,7 @@ namespace DotAttribute.Repo
             //{
             //	list.Add(Crawler.GetHeroHomepage(hero));
             //}
-
+            
             return list;
         }
 
@@ -33,7 +33,7 @@ namespace DotAttribute.Repo
             {
                 try
                 {
-                    return client.DownloadString($"https://dota2.gamepedia.com/{heroName}");
+                    return client.DownloadString($"https://dota2.gamepedia.com{heroName}");
                 }
                 catch (Exception)
                 {
